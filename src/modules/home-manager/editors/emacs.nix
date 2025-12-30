@@ -14,5 +14,6 @@
     nerd-fonts.jetbrains-mono
     gcc
     libtool
+    nixd
   ];
 }

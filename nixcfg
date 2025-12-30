@@ -5,18 +5,29 @@ CONFIG_BASE="$PWD/src/hosts"
 NIXOS_VERSION=$(cat version)
 
 usage() {
-    echo "Usage:"
-    echo "   --build [machine] Build and switch system"
+    echo "Usage: ./nixcfg"
+    echo "   --build [machine<prometheus>] Build and switch system"
     echo "   --channels Update channels"
-    exit 0
+    echo "   --machines"
+    echo "   --help Print the help"
+}
+
+invalid_usage() {
+    echo "Invalid usage!"
+    usage
 }
 
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     usage
+    exit 0
 fi
 
 case "$1" in
     --build)
+        if [ "$#" -ne 2 ]; then
+            invalid_usage
+            exit 64
+        fi
         MACHINE="$2"
         CONFIG="$CONFIG_BASE/${MACHINE:-prometheus}.nix"
         echo ">> Building from config $CONFIG"
@@ -24,11 +35,33 @@ case "$1" in
         sudo nixos-rebuild switch -I nixos-config="$CONFIG"
         ;;
     --channels)
+        if [ "$#" -ne 1 ]; then
+            invalid_usage
+            exit 64
+        fi
         echo ">> Adding channels"
         sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
         sudo nix-channel --update
         ;;
-    *)
+    --help)
         usage
+        exit 0
         ;;
+    --machines)
+        echo "Available machines ($(hostname)):"
+        current_host=$(hostname)
+
+        ls "$CONFIG_BASE" | grep -v '^hardware$' | sed 's/\.nix$//' | while read -r machine; do
+            if [ "$machine" = "$current_host" ]; then
+                echo "- $machine <- current machine"
+            else
+                echo "- $machine"
+            fi
+        done
+
+        exit 0
+        ;;
+    *)
+        invalid_usage
+        exit 64
 esac

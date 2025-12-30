@@ -2,7 +2,7 @@
 
 {
 	imports =[
-		../hardware/prometheus.nix
+		./hardware/prometheus.nix
 		../modules
 		../modules/nixos/wm/gnome.nix
 
@@ -15,10 +15,6 @@
 
 	environment.systemPackages = with pkgs; [
 		vim
-		firefox
-		emacs
-		git
-		nixd
 		tree
 	];
 
