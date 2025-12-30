@@ -22,7 +22,7 @@ case "$1" in
         ;;
     --channels)
         echo ">> Adding channels"
-	sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
+	    sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
         sudo nix-channel --update
         ;;
     *)

@@ -23,7 +23,7 @@
 
 ;; package manager
 (defvar bootstrap-version)
-(let ((bootstrap-file (expand-file-name "repos/straight.el/bootstrap.el" straight-base-dir))
+(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" straight-base-dir))
       (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -33,6 +33,7 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
 (straight-use-package 'use-package)
 
 (setq straight-use-package-by-default t)

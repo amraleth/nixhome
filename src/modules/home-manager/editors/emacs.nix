@@ -13,5 +13,6 @@
     gnumake
     nerd-fonts.jetbrains-mono
     gcc
+    libtool
   ];
 }
