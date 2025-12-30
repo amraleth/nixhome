@@ -6,10 +6,10 @@ NIXOS_VERSION=$(cat version)
 
 usage() {
     echo "Usage: ./nixcfg"
-    echo "   --build [machine<prometheus>] Build and switch system"
-    echo "   --channels Update channels"
-    echo "   --machines"
-    echo "   --help Print the help"
+    echo "   --build [machine] Build and switch system"
+    echo "   --channels        Update channels"
+    echo "   --machines        List all available configurations"
+    echo "   --help            Print the help"
 }
 
 invalid_usage() {
@@ -39,7 +39,7 @@ case "$1" in
             invalid_usage
             exit 64
         fi
-        echo ">> Adding channels"
+        echo ">> Adding channels for version $NIXOS_VERSION"
         sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
         sudo nix-channel --update
         ;;
@@ -48,7 +48,7 @@ case "$1" in
         exit 0
         ;;
     --machines)
-        echo "Available machines ($(hostname)):"
+        echo "Available machines:"
         current_host=$(hostname)
 
         ls "$CONFIG_BASE" | grep -v '^hardware$' | sed 's/\.nix$//' | while read -r machine; do
@@ -58,7 +58,6 @@ case "$1" in
                 echo "- $machine"
             fi
         done
-
         exit 0
         ;;
     *)
