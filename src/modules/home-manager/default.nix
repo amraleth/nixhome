@@ -9,6 +9,8 @@
   imports = [
     ./editors
     ./tools
+ #   ./wm/sway.nix
+    ./wm/i3.nix
   ];
   
 }

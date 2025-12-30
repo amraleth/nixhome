@@ -6,5 +6,6 @@
     ./gnupg.nix
     ./firefox.nix
     ./discord.nix
+    ./alacritty.nix
   ];
 }

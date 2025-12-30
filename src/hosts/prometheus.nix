@@ -4,7 +4,7 @@
 	imports =[
 		./hardware/prometheus.nix
 		../modules
-		../modules/nixos/wm/gnome.nix
+		#../modules/nixos/wm/gnome.nix
 
 		<home-manager/nixos>
 	];
