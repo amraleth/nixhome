@@ -24,10 +24,6 @@ fi
 
 case "$1" in
     --build)
-        if [ "$#" -ne 2 ]; then
-            invalid_usage
-            exit 64
-        fi
         MACHINE="$2"
         CONFIG="$CONFIG_BASE/${MACHINE:-prometheus}.nix"
         echo ">> Building from config $CONFIG"
@@ -35,10 +31,6 @@ case "$1" in
         sudo nixos-rebuild switch -I nixos-config="$CONFIG"
         ;;
     --channels)
-        if [ "$#" -ne 1 ]; then
-            invalid_usage
-            exit 64
-        fi
         echo ">> Adding channels for version $NIXOS_VERSION"
         sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
         sudo nix-channel --update
