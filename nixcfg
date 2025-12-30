@@ -1,28 +1,31 @@
 #!/usr/bin/env bash
 set -e
 
-PROMETHEUS_CONFIG="$PWD/src/hosts/prometheus.nix"
+CONFIG_BASE="$PWD/src/hosts"
 NIXOS_VERSION=$(cat version)
 
 usage() {
     echo "Usage:"
-    echo "   --build Build and switch system"
+    echo "   --build [machine] Build and switch system"
     echo "   --channels Update channels"
     exit 0
 }
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     usage
 fi
 
 case "$1" in
     --build)
-        echo ">> Building from config $PROMETHEUS_CONFIG"
-        sudo nixos-rebuild switch -I nixos-config="$PROMETHEUS_CONFIG"
+        MACHINE="$2"
+        CONFIG="$CONFIG_BASE/${MACHINE:-prometheus}.nix"
+        echo ">> Building from config $CONFIG"
+        
+        sudo nixos-rebuild switch -I nixos-config="$CONFIG"
         ;;
     --channels)
         echo ">> Adding channels"
-	    sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
+        sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIXOS_VERSION.tar.gz home-manager
         sudo nix-channel --update
         ;;
     *)

@@ -1,14 +1,13 @@
 { pkgs, ... }:
 
 {
-	imports =
-		[
-		  ../hardware/prometheus.nix
-		  ../modules
-		  ../modules/nixos/wm/gnome.nix
+	imports =[
+		../hardware/prometheus.nix
+		../modules
+		../modules/nixos/wm/gnome.nix
 
-      <home-manager/nixos>
-		];
+		<home-manager/nixos>
+	];
 
 	networking.hostName = "prometheus"; 
 
