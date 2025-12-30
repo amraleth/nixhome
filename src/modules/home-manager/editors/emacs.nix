@@ -15,5 +15,6 @@
     gcc
     libtool
     nixd
+    nixpkgs-fmt
   ];
 }
