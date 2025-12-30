@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Taken from https://github.com/rainbowdashlabs/nixos-config/blob/main/gc.sh
+
+echo "Removing generations older than 7d"
+nix-env --delete-generations 7d
+nix-store --gc
